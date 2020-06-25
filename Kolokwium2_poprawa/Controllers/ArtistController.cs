@@ -42,7 +42,7 @@ namespace Kolokwium2_poprawa.Controllers
         public IActionResult UpdateEventInfo(UpdateArtistEventTimeRequest eventTime)
         {
             // wykorzystałem id podane w requeście nie w ciele żądania
-            try 
+            try
             {
                 _context.UpdateEventInfo(eventTime);
                 return Ok("Event updated successfully!");
@@ -62,6 +62,10 @@ namespace Kolokwium2_poprawa.Controllers
             catch (StartDateFurtherThanEndDateException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (NoArtistsEventException ex)
+            {
+                return NotFound(ex.Message);
             }
         }
     }

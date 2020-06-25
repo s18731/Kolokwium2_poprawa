@@ -80,7 +80,11 @@ namespace Kolokwium2_poprawa.Services
                 throw new ArgumentNullException("Neither of the arguments can be null");
             if (request.idEvent < 0 || request.idArtist < 0)
                 throw new ArgumentCannotBeNegativeException("Neither of the IDs can be negative");
-            var eventId = _context.Event.Where(c => c.IdEvent == request.idEvent).Select(c => c.IdEvent).FirstOrDefault();
+            if (_context.ArtistEvent.Where(c => c.IdEvent == request.idEvent && c.IdArtist == request.idArtist) == null)
+            {
+                throw new NoArtistsEventException("Given event with given artist cannot be found!");
+            }
+            var eventId = _context.ArtistEvent.Where(c => c.IdEvent == request.idEvent && c.IdArtist == request.idArtist).Select(c => c.IdEvent).FirstOrDefault();
             if (!IsEventStarted(eventId))
             {
                 var dateDiff = (request.performanceDate - DateTime.Now).TotalSeconds;
