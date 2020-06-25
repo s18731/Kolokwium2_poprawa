@@ -99,7 +99,7 @@ namespace Kolokwium2_poprawa.Services
                     throw new EventNotFoundException("Cannot find event with given ID");
 
                 queriedEvent.StartDate = request.performanceDate;
-                _context.Entry(queriedEvent).Property("StartDate").IsModified = true;
+                _context.Entry(queriedEvent).Property("PerformanceDate").IsModified = true;
                 _context.Attach(queriedEvent);
                 _context.SaveChanges();
 
